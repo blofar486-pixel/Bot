@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Trading Dashboard</title>
+  <style>
+    body { font-family: Arial; background:#111; color:#fff; text-align:center; }
+    .box { background:#222; margin:10px auto; padding:15px; width:300px; border-radius:10px; }
+  </style>
+</head>
+
+<body>
+
+<h2>📊 REAL MARKET DATA DASHBOARD</h2>
+<div id="data"></div>
+
+<script>
+async function loadData() {
+  const res = await fetch("/api/data");
+  const data = await res.json();
+
+  let html = "";
+
+  data.forEach(d => {
+    html += `
+      <div class="box">
+        <h3>${d.name}</h3>
+        <p>Price: ${d.price}</p>
+      </div>
+    `;
+  });
+
+  document.getElementById("data").innerHTML = html;
+}
+
+loadData();
+setInterval(loadData, 5000);
+</script>
+
+</body>
+</html>
